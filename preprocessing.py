@@ -30,9 +30,9 @@ def process(imagePath, labelsPath):
 
     one_hot_labels = data[:,0:10]
     flattend_images = data[:,10:]
-    print one_hot_labels[1]
+    print one_hot_labels[0]
     print ""
-    showImage(flattend_images[1])
+    showImage(flattend_images[0])
 
     data_size = 6500
     training_size = int(data_size * 0.60)
