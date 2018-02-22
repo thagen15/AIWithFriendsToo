@@ -32,9 +32,7 @@ print("====================")
 print("metrics 1")
 print(metrics.classification_report(expected, predicted))
 print("====================")
-
+print ("metric 2")
 y_act = map(np.argmax, expected)
 y_pred = map(np.argmax, predicted)
-#print y_act
-#print y_pred
 print(confusion_matrix(y_act,y_pred, [0,1,2,3,4,5,6,7,8,9]))

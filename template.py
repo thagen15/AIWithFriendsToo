@@ -51,7 +51,7 @@ predict_arr = model.predict(x_test)
 #print (predict_arr.shape)
 y_act = map(np.argmax, y_test)
 y_pred = map(np.argmax, predict_arr)
-
+print("Confusion Matrix")
 print(confusion_matrix(y_act,y_pred, [0,1,2,3,4,5,6,7,8,9]))
 
 
