@@ -3,6 +3,7 @@ from keras.layers import Dense, Activation
 import numpy as np
 import preprocessing
 from sklearn.metrics import precision_score, recall_score, f1_score
+from sklearn import tree
 
 # Model Template
 x_train, y_train, x_val, y_val, x_test, y_test = preprocessing.process("images.npy","labels.npy")
@@ -14,12 +15,10 @@ model.add(Activation('relu'))
 #
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
 model.add(Activation('tanh'))
-model.add(Dense(10, kernel_initializer='he_normal')) # last layer
-model.add(Activation('tanh'))
-model.add(Dense(10, kernel_initializer='he_normal')) # last layer
-model.add(Activation('tanh'))
-#
 
+#
+model.add(Dense(10, kernel_initializer='he_normal')) # last layer
+model.add(Activation('relu'))
 
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
 model.add(Activation('softmax'))
@@ -33,7 +32,7 @@ model.compile(optimizer='sgd',
 # Train Model
 history = model.fit(x_train, y_train,
                     validation_data = (x_val, y_val),
-                    epochs=400,
+                    epochs=1,
                     batch_size=512)
 
 
