@@ -16,22 +16,22 @@ def process(imagePath, labelsPath):
 
     image_vectors = images.reshape(6500, 784)
     image_vectors = np.array(image_vectors)
-    print image_vectors[0].shape
+    print(image_vectors[0].shape)
 
     labels = np.load(labelsPath)
     labels_flat = labels.reshape(6500, 1)
     label_vectors = []
     one_hot_labels = keras.utils.to_categorical(labels_flat, num_classes=10)
     label_vectors = np.array(one_hot_labels)
-    print label_vectors[1].shape
+    print(label_vectors[1].shape)
 
     data = np.column_stack((label_vectors, image_vectors))
     np.random.shuffle(data)
 
     one_hot_labels = data[:,0:10]
     flattend_images = data[:,10:]
-    print one_hot_labels[1]
-    print ""
+    print (one_hot_labels[1])
+    print ("")
     showImage(flattend_images[1])
 
     data_size = 6500

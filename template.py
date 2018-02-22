@@ -32,7 +32,7 @@ model.compile(optimizer='sgd',
 # Train Model
 history = model.fit(x_train, y_train,
                     validation_data = (x_val, y_val),
-                    epochs=1,
+                    epochs=50,
                     batch_size=512)
 
 
@@ -42,8 +42,8 @@ print(history.history)
 
 predict_arr = model.predict(x_test)
 
-print (predict_arr.shape)
-print np.argmax(predict_arr[0])
+print(predict_arr.shape)
+print(np.argmax(predict_arr[0]))
 
 #print("Evaluating performance...")
 #precision = precision_score(y_test, predict_arr, average=None)	# Calculate the precision
