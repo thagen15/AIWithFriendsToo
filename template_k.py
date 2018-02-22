@@ -4,50 +4,31 @@ import numpy as np
 import preprocessing
 from sklearn.metrics import precision_score, recall_score, f1_score
 from sklearn import tree
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import confusion_matrix
+from sklearn import metrics
 
 # Model Template
 x_train, y_train, x_val, y_val, x_test, y_test = preprocessing.process("images.npy","labels.npy")
 
-model = Sequential() # declare model
-model.add(Dense(10, input_shape=(28*28, ), kernel_initializer='he_normal')) # first layer
-model.add(Activation('relu'))
+# instantiate learning model (k = 3)
+knn = KNeighborsClassifier(n_neighbors=15)
 
-#
-model.add(Dense(10, kernel_initializer='he_normal')) # last layer
-model.add(Activation('tanh'))
-
-#
-model.add(Dense(10, kernel_initializer='he_normal')) # last layer
-model.add(Activation('relu'))
-
-model.add(Dense(10, kernel_initializer='he_normal')) # last layer
-model.add(Activation('softmax'))
+# fitting the model
+knn.fit(x_train, y_train)
 
 
-# Compile Model
-model.compile(optimizer='sgd',
-              loss='categorical_crossentropy',
-              metrics=['accuracy'])
 
-# Train Model
-history = model.fit(x_train, y_train,
-                    validation_data = (x_val, y_val),
-                    epochs=1,
-                    batch_size=512)
-
-
-# Report Results
-
-print(history.history)
-
-predict_arr = model.predict(x_test)
-
-print (predict_arr.shape)
-print np.argmax(predict_arr[0])
-
-#print("Evaluating performance...")
-#precision = precision_score(y_test, predict_arr, average=None)	# Calculate the precision
-#recall    = recall_score(y_test, predict_arr, average=None)	# Calculate the recall
-#f1        = f1_score(y_test, predict_arr, average=None)		# Calculate f1
-
-# model.predict(x_test,y_test)
+print("====================")
+expected = y_test
+print ("expected")
+print (expected)
+print("====================")
+predicted = knn.predict(x_test)
+print ("predicted")
+print (predicted)
+print("====================")
+print("metrics 1")
+print(metrics.classification_report(expected, predicted))
+print("====================")
