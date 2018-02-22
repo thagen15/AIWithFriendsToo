@@ -16,14 +16,13 @@ model = tree.DecisionTreeClassifier()
 
 model.fit(x_train, y_train)
 
-y_predict = model.predict(x_test)
-accuracy_score(y_test, y_predict)
+print (model)
 
 expected = y_test
 predicted = model.predict(x_test)
 
 # summarize the fit of the model
 print(metrics.classification_report(expected, predicted))
-#print(metrics.confusion_matrix(expected, predicted))
+#print(metrics.confusion_matrix(expected, predicted, labels=["expected","predicted"]))
 
 
