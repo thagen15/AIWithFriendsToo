@@ -20,12 +20,10 @@ model.add(Dense(10, kernel_initializer='he_normal')) # last layer
 model.add(Activation('tanh'))
 
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
-model.add(Activation('tanh'))
-
+model.add(Activation('relu'))
+#
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
 model.add(Activation('tanh'))
-#
-
 
 
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
@@ -40,7 +38,7 @@ model.compile(optimizer='sgd',
 # Train Model
 history = model.fit(x_train, y_train,
                     validation_data = (x_val, y_val),
-                    epochs=40,
+                    epochs=400,
                     batch_size=512)
 
 
@@ -51,8 +49,6 @@ predict_arr = model.predict(x_test)
 #print (predict_arr.shape)
 y_act = list(map(np.argmax, y_test))
 y_pred = list(map(np.argmax, predict_arr))
-print(y_act)
-print(y_pred)
 print("Confusion Matrix")
 print(confusion_matrix(y_act,y_pred, [0,1,2,3,4,5,6,7,8,9]))
 
