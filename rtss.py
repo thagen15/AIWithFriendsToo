@@ -34,7 +34,7 @@ model.compile(optimizer='sgd',
 # Train Model
 history = model.fit(x_train, y_train,
                     validation_data = (x_val, y_val),
-                    epochs=1,
+                    epochs=10000,
                     batch_size=512)
 
 
@@ -50,7 +50,7 @@ y_pred = list(map(np.argmax, predict_arr))
 #print(y_pred)
 
 print ("Relu,Tanh,Selu,Softmax")
-print ("Epochs=1")
+print ("Epochs=10000")
 print("Confusion Matrix")
 print(confusion_matrix(y_act,y_pred, [0,1,2,3,4,5,6,7,8,9]))
 

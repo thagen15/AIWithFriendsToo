@@ -18,9 +18,6 @@ model.add(Activation('relu'))
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
 model.add(Activation('tanh'))
 
-#
-model.add(Dense(10, kernel_initializer='he_normal')) # last layer
-model.add(Activation('selu'))
 
 #
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
@@ -34,7 +31,7 @@ model.compile(optimizer='sgd',
 # Train Model
 history = model.fit(x_train, y_train,
                     validation_data = (x_val, y_val),
-                    epochs=1,
+                    epochs=10000,
                     batch_size=512)
 
 
@@ -49,8 +46,8 @@ y_pred = list(map(np.argmax, predict_arr))
 #print(y_act)
 #print(y_pred)
 
-print ("Relu,Tanh,Selu,Softmax")
-print ("Epochs=1")
+print ("Relu,Tanh,Softmax")
+print ("Epochs=10000")
 print("Confusion Matrix")
 print(confusion_matrix(y_act,y_pred, [0,1,2,3,4,5,6,7,8,9]))
 
