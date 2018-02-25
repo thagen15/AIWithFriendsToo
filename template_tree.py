@@ -54,6 +54,20 @@ def ticTacToe(x_set):
     pics = np.array(pics)
     #print(pics)
     return pics
+def getNumOfIntense(x_set):
+    pics = []
+
+    for picture in x_set:
+        indices = []
+
+        for i in range(len(picture)):
+            if picture[i] >175:
+                indices.append(i)
+
+        pics.append(indices)
+
+    pics = np.array(pics)
+    return pics
 
 #3 number of black pixels
 def getWhiteBlackRatio(x_set):
@@ -67,7 +81,7 @@ def getWhiteBlackRatio(x_set):
             if pixel > 150:
                 blacks += 1
         pics.append(whites/blacks)
-    pics = np.array(pics)
+    pics = np.array(pics, dtype=object)
     return pics
 
 #4 Sort picture by pixel intensity
@@ -84,17 +98,17 @@ def sortByIntesnity(x_set):
 # x_val = getAvgPixelIntensity(x_val).reshape(-1,1)
 ############################
 
-### TIC TAC TOE###
+###Intensities###
 ##Change the second number in reshape() if the number doesn't match the labels length
-#x_train = ticTacToe(x_train).reshape(-1,2)
-#x_test = ticTacToe(x_test).reshape(-1,2)
-#x_val = ticTacToe(x_val).reshape(-1,2)
+x_train = getNumOfIntense(x_train).reshape(-1,1)
+x_test = getNumOfIntense(x_test).reshape(-1,1)
+x_val = getNumOfIntense(x_val).reshape(-1,1)
 ############################
 
 #### Black White Ratio###
-x_train = getWhiteBlackRatio(x_train).reshape(-1,1)
-x_test = getWhiteBlackRatio(x_test).reshape(-1,1)
-x_val = getWhiteBlackRatio(x_val).reshape(-1,1)
+# x_train = getWhiteBlackRatio(x_train).reshape(-1,1)
+# x_test = getWhiteBlackRatio(x_test).reshape(-1,1)
+# x_val = getWhiteBlackRatio(x_val).reshape(-1,1)
 ############################
 
 #### SORTED BY PIXEL DENSITY###
@@ -103,7 +117,7 @@ x_val = getWhiteBlackRatio(x_val).reshape(-1,1)
 # x_val = sortByIntesnity(x_val)
 ############################
 
-
+print(x_train)
 print(x_train.shape)
 print(y_train.shape)
 
