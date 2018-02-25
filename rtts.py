@@ -20,8 +20,7 @@ model.add(Activation('tanh'))
 
 #
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
-
-model.add(Activation('selu'))
+model.add(Activation('tanh'))
 
 #
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
@@ -35,13 +34,16 @@ model.compile(optimizer='sgd',
 # Train Model
 history = model.fit(x_train, y_train,
                     validation_data = (x_val, y_val),
-                    epochs=1,
+                    epochs=500,
                     batch_size=512)
 
 
 # Report Results
 
-#print(history.history)
+print(history.history)
+accuracy = np.asarray(history.history['acc'])
+val_accuracy = np.asarray(history.history['val_acc'])
+np.savetxt("rtts.csv", np.c_[accuracy, val_accuracy], delimiter=",")
 expected = y_test
 predict_arr = model.predict(x_test)
 #print (predict_arr.shape)
@@ -50,8 +52,8 @@ y_pred = list(map(np.argmax, predict_arr))
 #print(y_act)
 #print(y_pred)
 
-print ("Relu,Tanh,Selu,Softmax")
-print ("Epochs=1")
+print ("Relu,Tanh,Tanh,Softmax")
+print ("Epochs=10000")
 print("Confusion Matrix")
 print(confusion_matrix(y_act,y_pred, [0,1,2,3,4,5,6,7,8,9]))
 
