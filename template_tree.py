@@ -21,13 +21,35 @@ model = tree.DecisionTreeClassifier()
 def getAvgPixelIntensity(x_set):
     pixelIntensity =0
     pics = []
+    #print(x_set.shape)
     for picture in x_set:
         sum = 0
         for pixel in picture:
             sum += pixel
         pixelIntensity +=sum
         pics.append(pixelIntensity/len(picture))
+
+
     pics = np.array(pics)
+
+    #print(pics.shape)
+    return pics
+
+def getIntensitySum(x_set):
+    pixelIntensity =0
+    pics = []
+    #print(x_set.shape)
+    for picture in x_set:
+        sum = 0
+        for pixel in picture:
+            sum += pixel
+        pixelIntensity +=sum
+        pics.append(pixelIntensity)
+
+
+    pics = np.array(pics)
+
+    #print(pics.shape)
     return pics
 
 #2 Break picture down into 9 sections and assign each section mostly black or white
@@ -57,17 +79,17 @@ def ticTacToe(x_set):
 def getNumOfIntense(x_set):
     pics = []
     length = 0
-    print(len(x_set))
+    # print(len(x_set))
     for picture in x_set:
         indices = []
-        
+
         for i in range(len(picture)):
             if picture[i] >175:
                 indices.append(i)
         pics.append(indices)
         if(len(indices) > length):
             length = len(indices)
-    print(len(pics))
+    # print(len(pics))
     pics2 = []
     for picture in pics:
         if(len(picture) < length):
@@ -76,16 +98,30 @@ def getNumOfIntense(x_set):
                 picture.append(picture[0])
         picture = np.array(picture)
         pics2.append(picture)
-
-    print(length)
-    print(len(pics2))
-    print(pics2)
-    print()
-    print()
+    #
+    # print(length)
+    # print(len(pics2))
+    # print(pics2)
+    # print()
+    # print()
     pics2 = np.array(pics2)
-    print(pics2)
+    print(pics2.shape)
     return pics2
 
+#3 Black pixels - white pixels
+def blackMinusWhite(x_set):
+    pics = []
+    for picture in x_set:
+        whites = 0
+        blacks = 0
+        for pixel in picture:
+            if pixel >= 200:
+                blacks += 1
+            else:
+                whites+=1
+        pics.append(blacks-whites)
+    pics = np.array(pics, dtype=object)
+    return pics
 #3 number of black pixels
 def getWhiteBlackRatio(x_set):
     pics = []
@@ -107,37 +143,41 @@ def sortByIntesnity(x_set):
         sorted(picture)
     return x_set
 
-
-
 #### AVG PIXEL INTENSITY###
-# x_train = getAvgPixelIntensity(x_train).reshape(-1,1)
-# x_test = getAvgPixelIntensity(x_test).reshape(-1,1)
-# x_val = getAvgPixelIntensity(x_val).reshape(-1,1)
+x_train_avg = getAvgPixelIntensity(x_train).reshape(-1,1)
+x_test_avg = getAvgPixelIntensity(x_test).reshape(-1,1)
+x_val_avg = getAvgPixelIntensity(x_val).reshape(-1,1)
+#print(x_train_avg.shape)
+
+#print(x_train.shape)
 ############################
 
 ###Intensities###
 ##Change the second number in reshape() if the number doesn't match the labels length
-x_train = getNumOfIntense(x_train).reshape(-1,1)
-x_test = getNumOfIntense(x_test).reshape(-1,1)
-x_val = getNumOfIntense(x_val).reshape(-1,1)
-print('done')
-############################
+x_train_numInts = blackMinusWhite(x_train).reshape(-1,1)
+x_test_numInts = blackMinusWhite(x_test).reshape(-1,1)
+x_val_numInts = blackMinusWhite(x_val).reshape(-1,1)
+###########################
 
 #### Black White Ratio###
-# x_train = getWhiteBlackRatio(x_train).reshape(-1,1)
-# x_test = getWhiteBlackRatio(x_test).reshape(-1,1)
-# x_val = getWhiteBlackRatio(x_val).reshape(-1,1)
+x_train_sum = getIntensitySum(x_train).reshape(-1,1)
+x_test_sum = getIntensitySum(x_test).reshape(-1,1)
+x_val_sum = getIntensitySum(x_val).reshape(-1,1)
 ############################
 
 #### SORTED BY PIXEL DENSITY###
-# x_train = sortByIntesnity(x_train)
-# x_test = sortByIntesnity(x_test)
-# x_val = sortByIntesnity(x_val)
+x_train_sorted = sortByIntesnity(x_train)
+x_test_sorted = sortByIntesnity(x_test)
+x_val_sorted = sortByIntesnity(x_val)
 ############################
 
-print(x_train)
-print(x_train.shape)
-print(y_train.shape)
+# print(x_train[0])
+# print(x_train.shape)
+# print(y_train.shape)
+
+x_train = np.column_stack((x_train, x_train_avg, x_train_numInts, x_train_sorted, x_train_sum))
+x_test = np.column_stack((x_test, x_test_avg, x_test_numInts, x_test_sorted, x_test_sum))
+x_val = np.column_stack((x_val, x_val_avg,x_val_numInts, x_val_sorted, x_val_sum))
 
 model.fit(x_train, y_train)
 
@@ -163,9 +203,3 @@ y_pred = list(map(np.argmax, predicted))
 #print y_act
 #print y_pred
 print(confusion_matrix(y_act,y_pred, [0,1,2,3,4,5,6,7,8,9]))
-# inv_exp = format(np.argmax(expected, axis=0))
-# re.sub("\s+", ",", inv_exp.strip())
-
-# inv_pre = format(np.argmax(predicted, axis=0))
-# re.sub("\s+", ",", inv_pre.strip())
-# print(metrics.confusion_matrix(inv_exp, inv_pre))
