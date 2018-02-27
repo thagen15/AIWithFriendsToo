@@ -76,37 +76,20 @@ def ticTacToe(x_set):
     pics = np.array(pics)
     #print(pics)
     return pics
-def getNumOfIntense(x_set):
+def getIndiceSum(x_set):
     pics = []
-    length = 0
-    # print(len(x_set))
+
     for picture in x_set:
-        indices = []
+        indices = 0
 
         for i in range(len(picture)):
             if picture[i] >175:
-                indices.append(i)
+                indices = indices + i
         pics.append(indices)
-        if(len(indices) > length):
-            length = len(indices)
-    # print(len(pics))
-    pics2 = []
-    for picture in pics:
-        if(len(picture) < length):
-            difference = length - len(picture)
-            for j in range(0, difference):
-                picture.append(picture[0])
-        picture = np.array(picture)
-        pics2.append(picture)
-    #
-    # print(length)
-    # print(len(pics2))
-    # print(pics2)
-    # print()
-    # print()
-    pics2 = np.array(pics2)
-    print(pics2.shape)
-    return pics2
+
+    pics = np.array(pics)
+    print(pics.shape)
+    return pics
 
 #3 Black pixels - white pixels
 def blackMinusWhite(x_set):
@@ -160,6 +143,12 @@ x_val_numInts = blackMinusWhite(x_val).reshape(-1,1)
 ###########################
 
 #### Black White Ratio###
+x_train_i_sum = getIndiceSum(x_train).reshape(-1,1)
+x_test_i_sum = getIndiceSum(x_test).reshape(-1,1)
+x_val_i_sum = getIndiceSum(x_val).reshape(-1,1)
+############################
+
+#### Black White Ratio###
 x_train_sum = getIntensitySum(x_train).reshape(-1,1)
 x_test_sum = getIntensitySum(x_test).reshape(-1,1)
 x_val_sum = getIntensitySum(x_val).reshape(-1,1)
@@ -175,9 +164,9 @@ x_val_sorted = sortByIntesnity(x_val)
 # print(x_train.shape)
 # print(y_train.shape)
 
-x_train = np.column_stack((x_train, x_train_avg, x_train_numInts, x_train_sorted, x_train_sum))
-x_test = np.column_stack((x_test, x_test_avg, x_test_numInts, x_test_sorted, x_test_sum))
-x_val = np.column_stack((x_val, x_val_avg,x_val_numInts, x_val_sorted, x_val_sum))
+x_train = np.column_stack((x_train, x_train_avg, x_train_numInts, x_train_sorted, x_train_sum, x_train_i_sum))
+x_test = np.column_stack((x_test, x_test_avg, x_test_numInts, x_test_sorted, x_test_sum, x_test_i_sum))
+x_val = np.column_stack((x_val, x_val_avg,x_val_numInts, x_val_sorted, x_val_sum, x_val_i_sum))
 
 model.fit(x_train, y_train)
 
