@@ -56,18 +56,35 @@ def ticTacToe(x_set):
     return pics
 def getNumOfIntense(x_set):
     pics = []
-
+    length = 0
+    print(len(x_set))
     for picture in x_set:
         indices = []
-
+        
         for i in range(len(picture)):
             if picture[i] >175:
                 indices.append(i)
-
         pics.append(indices)
+        if(len(indices) > length):
+            length = len(indices)
+    print(len(pics))
+    pics2 = []
+    for picture in pics:
+        if(len(picture) < length):
+            difference = length - len(picture)
+            for j in range(0, difference):
+                picture.append(picture[0])
+        picture = np.array(picture)
+        pics2.append(picture)
 
-    pics = np.array(pics)
-    return pics
+    print(length)
+    print(len(pics2))
+    print(pics2)
+    print()
+    print()
+    pics2 = np.array(pics2)
+    print(pics2)
+    return pics2
 
 #3 number of black pixels
 def getWhiteBlackRatio(x_set):
@@ -103,6 +120,7 @@ def sortByIntesnity(x_set):
 x_train = getNumOfIntense(x_train).reshape(-1,1)
 x_test = getNumOfIntense(x_test).reshape(-1,1)
 x_val = getNumOfIntense(x_val).reshape(-1,1)
+print('done')
 ############################
 
 #### Black White Ratio###
