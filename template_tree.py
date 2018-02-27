@@ -14,7 +14,7 @@ import re
 # Model Template
 x_train, y_train, x_val, y_val, x_test, y_test = preprocessing.process("images.npy","labels.npy")
 # val = int(raw_input("Max Depth: "))
-model = tree.DecisionTreeClassifier()
+model = tree.DecisionTreeClassifier(max_depth = 10)
 #4 different types of feature extraction
 
 #1 avg pixel values for each number
