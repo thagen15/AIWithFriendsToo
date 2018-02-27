@@ -52,30 +52,6 @@ def getIntensitySum(x_set):
     #print(pics.shape)
     return pics
 
-#2 Break picture down into 9 sections and assign each section mostly black or white
-def ticTacToe(x_set):
-    pics = []
-    ###Doesn't really work, Leaving this for Parm
-    for picture in x_set:
-        picture.reshape(28,28)
-        picture = np.hsplit(picture,2)
-
-
-        for submatrice in picture:
-            whites = 0
-            blacks = 0
-            for pixel in submatrice:
-                if pixel<100:
-                    whites +=1
-                if pixel > 150:
-                    blacks += 1
-            if blacks/whites > .05:
-                pics.append(1)
-            else:
-                pics.append(0)
-    pics = np.array(pics)
-    #print(pics)
-    return pics
 def getIndiceSum(x_set):
     pics = []
 
